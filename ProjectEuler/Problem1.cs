@@ -12,24 +12,16 @@ namespace ProjectEuler
     /// </summary>
     public class Problem1 : IProblem
     {
-
-
-        public static Expression<Func<IEnumerable<int>>> NaturalsUnderOneThousand = Core.Range.PartiallyEvaluate(1, 999);
-
-        public static Expression<Func<int, int, bool>> MultipleOf = (int input, int divisor) => input % divisor == 0;
-        public static Expression<Func<int, bool>> MultipleOfFive = i => i % 5 == 0;
-
-        public static Expression<Func<int, bool>> MultipleOfThreeOrFive =
-            i => MultipleOf.Compile()(i, 3) || MultipleOf.Compile()(i, 5);
-
-
         public ISolution Solve()
         {
-            var solution = Solution.Create(() => NaturalsUnderOneThousand.Compile()()
-                                                  .Where(MultipleOfThreeOrFive.Compile())
-                                                  .Sum());
+            var naturalsUnderOneThousand = Core.Range._(1, 999);
+            var isMultipleOfThreeOrFive = Core.IsMultipleOf._(3).Or(Core.IsMultipleOf._(5));
 
-            return solution;
+            var solution = naturalsUnderOneThousand
+                .Where(isMultipleOfThreeOrFive)
+                .Sum();
+
+            return Solution.Create(solution);            
         }
     }
 
