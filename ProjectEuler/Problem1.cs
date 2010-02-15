@@ -14,11 +14,8 @@ namespace ProjectEuler
     {
         public ISolution Solve()
         {
-            var naturalsUnderOneThousand = Core.Range._(1, 999);
-            var isMultipleOfThreeOrFive = Core.IsMultipleOf._(3).Or(Core.IsMultipleOf._(5));
-
-            var solution = naturalsUnderOneThousand
-                .Where(isMultipleOfThreeOrFive)
+            var solution = Core.Range._(1, 999)
+                .Where(Core.IsMultipleOf._(3).Or(Core.IsMultipleOf._(5)))
                 .Sum();
 
             return Solution.Create(solution);            
