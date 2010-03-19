@@ -12,11 +12,33 @@ namespace ProjectEuler
     /// </summary>
     public class Problem1 : IProblem
     {
+        /// <summary>
+        /// (sum
+        ///   (filter 
+        ///      (range 1 999)
+        ///      (or
+        ///         (is-multiple-of 3)
+        ///         (is-multiple-of 5)
+        ///      )
+        ///   )
+        /// )
+        /// </summary>
+        /// <returns></returns>
         public ISolution Solve()
         {
-            var solution = Core.Range._(1, 999)
-                .Where(Core.IsMultipleOf._(3).Or(Core.IsMultipleOf._(5)))
-                .Sum();
+            //var solution = Core.Range._(1, 999)
+            //    .Where(Core.IsMultipleOf._(3).Or(Core.IsMultipleOf._(5)))
+            //    .Sum();
+
+            var solution = FunctionalExtensions.Sum(
+                FunctionalExtensions.Where(
+                    Core.Range._(1, 999),
+                    FunctionalExtensions.Or(
+                        Core.IsMultipleOf._(3),
+                        (Core.IsMultipleOf._(5))
+                        )                    
+                    )
+                );
 
             return Solution.Create(solution);            
         }
